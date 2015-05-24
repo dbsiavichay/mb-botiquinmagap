@@ -1,0 +1,39 @@
+.navbar{
+	margin-bottom: 2px;
+}
+
+.views-container{
+	padding-top: 15px;
+	background-color: white;		
+}
+
+.menu-container{
+	margin: 0;
+	padding: 0;	
+}
+
+.input-inline{
+	padding-left: 2px;
+	padding-right: 2px;
+}
+
+.row{
+	margin-left: 0;
+	margin-right: 0;
+}
+
+.panel-heading{
+	text-transform: uppercase;
+}
+
+.without-padding{
+	padding: 0;
+}
+
+.busqueda-producto-container{
+	position: relative;
+}
+
+.busqueda-producto-lista{
+	position: absolute;
+}
