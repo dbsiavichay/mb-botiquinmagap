@@ -7,6 +7,13 @@ App.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
 });
 
 Ember.Inflector.inflector.irregular('venta', 'ventas');
+Ember.Inflector.inflector.irregular('detalleVenta', 'detallesventa');
+Ember.Inflector.inflector.irregular('producto', 'productos');
+Ember.Inflector.inflector.irregular('medida', 'medidasproducto');
+Ember.Inflector.inflector.irregular('tipo', 'tiposproducto');
+Ember.Inflector.inflector.irregular('grupo', 'gruposproducto');
+Ember.Inflector.inflector.irregular('uso', 'usosventa');
+Ember.Inflector.inflector.irregular('enfermedad', 'enfermedades');
+Ember.Inflector.inflector.irregular('especie', 'especies');
+Ember.Inflector.inflector.irregular('cliente', 'clientes');
 Ember.Inflector.inflector.irregular('asociacion', 'asociaciones');
-Ember.Inflector.inflector.irregular('provincia', 'provincias');
-Ember.Inflector.inflector.irregular('canton', 'cantones');
