@@ -1,31 +1,40 @@
 App.VentaController = Ember.ArrayController.extend({
   actions: {
-    buscarCliente: function () {      
-      this.controllerFor('clientes').set('clientes', this.store.find('cliente'));
-      this.controllerFor('clientes').set('error', false);
-      this.controllerFor('clientes').set('mensajeError', '');      
-      this.transitionToRoute('clientes');
-    },
+    agregarDetalle: function () { 
+      this.set('error', false);
+      var detalle = this.store.createRecord('detalleVenta', {
+        cantidad: '',
+        precio_unitario: '',
+        precio_total: '',
+        esActual: true,
+      });
+
+      this.get('venta').get('detalles').forEach(function (item) {
+        item.set('esActual', false);
+      });
+      this.get('venta').get('detalles').insertAt(0, detalle);
+    }
   }
 });
 
-App.ClientesController = Ember.ArrayController.extend({
+App.ProductosController = Ember.ArrayController.extend({
   actions: {
-    filtrarClientes: function () {
-      this.set('clientes', this.store.find('cliente', {filtro: this.get('keyword')}));
+    filtrarProductos: function () {
+      this.set('productos', this.store.find('producto', {keyword: this.get('keyword')}));
     },
-    seleccionar: function (cliente) {
+    seleccionar: function (producto) {
       this.set('error', false);      
-      this.set('cliente', cliente);            
+      this.set('producto', producto);            
     },
     aceptar: function () {
-      if(!this.get('cliente')){
+      if(!this.get('producto')){
         this.set('error', true);
-        this.set('mensajeError', 'Debe seleccionar un cliente.')
+        this.set('mensajeError', 'Debe seleccionar un producto.')
         return;        
       }
-      
-      this.controllerFor('venta').set('clienteSeleccionado', this.get('cliente'));
+
+      var index = this.controllerFor('venta').get('venta').get('detalles').indexOf(this.get('detalle'));
+      this.controllerFor('venta').get('venta').get('detalles').objectAt(index).set('producto', this.get('producto'));
       this.transitionToRoute('venta', 'nuevo');
     },
     cancelar: function () {
@@ -33,4 +42,25 @@ App.ClientesController = Ember.ArrayController.extend({
     }
   }
 });
+
+//Modal controllers
+App.ModalClienteController = Ember.ArrayController.extend({  
+  actions: {
+    filtrar: function () {
+      this.set('clientes', this.store.find('cliente', {filtro: this.get('keyword')}));
+    },
+    seleccionar: function (cliente) {
+      this.set('error', false);      
+      this.set('cliente', cliente);            
+    },
+    aceptar: function () {
+      if(this.get('cliente')){
+        this.get('venta').set('cliente', this.get('cliente'));
+      }      
+    }    
+  }
+});
+
+
+
 

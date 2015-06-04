@@ -64,24 +64,3 @@ App.Asociacion = DS.Model.extend({
 	nombre: DS.attr('string'),
 	responsable: DS.attr('string')
 });
-
-
-// App.ProvinciasController = Ember.ArrayController.extend({
-//   actions: {
-//     crear: function() {       
-//       var codigo = this.get('codigo');
-//       var nombre = this.get('nombre');
-            
-//       var provincia = this.store.createRecord('provincia', {
-//         codigo: codigo,
-//         nombre: nombre
-//       });
-      
-//       this.set('codigo', '');
-//       this.set('nombre', '');
-
-      
-//       provincia.save();
-//     }
-//   }
-// });
