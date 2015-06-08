@@ -11,7 +11,22 @@ App.ApplicationRoute = Ember.Route.extend({
         controller = this.controllerFor('modalCliente');
         controller.set('clientes', this.store.find('cliente'));
         controller.set('venta', model)
-      }      
+      }
+      if(name==='modal-producto'){
+        controller = this.controllerFor('modalProducto');
+        controller.set('productos', this.store.find('producto'));
+        controller.set('detalle', model);        
+      } 
+
+      if(name==='modal-uso'){
+        controller = this.controllerFor('modalUso');
+        controller.set('enfermedades', this.store.find('enfermedad'));
+        controller.set('especies', this.store.find('especie'));
+        controller.set('detalle', model);        
+        controller.set('uso', {});
+        controller.set('usos', []);
+      }
+            
       this.render(name, {
         into: 'application',
         outlet: 'modal',
