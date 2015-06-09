@@ -7,7 +7,7 @@ App.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
 });
 
 Ember.Inflector.inflector.irregular('venta', 'ventas');
-Ember.Inflector.inflector.irregular('detalleVenta', 'detallesventa');
+Ember.Inflector.inflector.irregular('detalle_venta', 'detallesventa');
 Ember.Inflector.inflector.irregular('producto', 'productos');
 Ember.Inflector.inflector.irregular('medida', 'medidasproducto');
 Ember.Inflector.inflector.irregular('tipo', 'tiposproducto');

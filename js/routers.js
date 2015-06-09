@@ -22,9 +22,9 @@ App.ApplicationRoute = Ember.Route.extend({
         controller = this.controllerFor('modalUso');
         controller.set('enfermedades', this.store.find('enfermedad'));
         controller.set('especies', this.store.find('especie'));
-        controller.set('detalle', model);        
-        controller.set('uso', {});
-        controller.set('usos', []);
+        controller.set('detalle', model);
+        controller.get('detalle').get('usos').pushObjects(this.store.find('uso', {detalleventa: model.get('id')}));
+        controller.set('uso', {});        
       }
             
       this.render(name, {
@@ -53,12 +53,13 @@ App.VentaRoute = Ember.Route.extend({
   model: function (params) {
     var id = params.venta_id;
     if(id!='nuevo'){
-      return this.store.find('venta', id);
-    } 
-    return this.store.createRecord('venta', {});
+      return this.store.find('venta', id);      
+    }     
+    //return this.store.createRecord('venta', {});
   },
-  setupController: function(controller, model) {     
+  setupController: function(controller, model) {    
     controller.set('venta', model);
+    controller.get('venta').get('detalles').pushObjects(this.store.find('detalleVenta', {venta: model.get('id')}));    
     controller.set('asociaciones', this.store.find('asociacion')); 
   },
 });

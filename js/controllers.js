@@ -14,12 +14,14 @@ App.VentaController = Ember.ArrayController.extend({
         if(isNaN(t)) t = 0;
         this.set('precio_total', t);
       }
+
       detalle.addObserver('cantidad', calcularTotal);
       detalle.addObserver('precio_unitario', calcularTotal);
 
       this.get('venta').get('detalles').forEach(function (item) {
         item.set('esActual', false);
       });
+
       this.get('venta').get('detalles').insertAt(0, detalle);
     },
     editarDetalle: function (detalle) {
@@ -33,6 +35,37 @@ App.VentaController = Ember.ArrayController.extend({
       this.set('error', false);
       this.get('venta').get('detalles').removeObject(detalle);
     },
+    guardar: function (router) {      
+      var venta = this.get('venta');
+      var total = 0;      
+      var promises = [];
+      venta.get('detalles').forEach(function (detalle) {
+        total+= parseFloat(detalle.get('precio_total'));
+      })
+
+      venta.set('valor_total', total);        
+
+      venta.save().then(function (_venta) {
+        venta.get('detalles').forEach(function (detalle) {
+          detalle.set('venta', _venta);
+
+          detalle.save().then(function (_detalle) {
+
+            detalle.get('usos').forEach(function (uso) {              
+              var data = {
+                cantidad: uso.get('cantidad'),
+                enfermedad: uso.get('enfermedad').get('id'),
+                especie: uso.get('especie').get('id'),
+                detalle_venta: _detalle.get('id')
+              }
+              $.post('http://127.0.0.1:8000/usosventa/', data);
+            });
+
+          });                    
+        });        
+      });
+      this.replaceRoute('ventas');
+    }
   }
 });
 
@@ -77,7 +110,7 @@ App.ModalUsoController = Ember.ArrayController.extend({
       this.get('detalle').get('usos').forEach(function (item) {
         item.set('esActual', false);
       });
-      
+
       if(!this.get('uso').cantidad || !this.get('uso').enfermedad || !this.get('uso').especie){
         this.set('error', true);
         this.set('mensajeError', 'Todos los campos son obligatorios');
@@ -88,7 +121,7 @@ App.ModalUsoController = Ember.ArrayController.extend({
       u.set('cantidad', this.get('uso').cantidad);
       u.set('enfermedad', this.get('uso').enfermedad);
       u.set('especie', this.get('uso').especie);
-      u.set('detalleVenta', this.get('detalle'));
+      this.get('detalle').get('usos').addObject(u);
       this.set('uso', {});
     },
     editar: function (uso) {      
