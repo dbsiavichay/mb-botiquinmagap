@@ -58,7 +58,7 @@ App.VentaController = Ember.ArrayController.extend({
                 especie: uso.get('especie').get('id'),
                 detalle_venta: _detalle.get('id')
               }
-              $.post('http://127.0.0.1:8000/usosventa/', data);
+              $.post('http://192.168.1.30:8000/usosventa/', data);
             });
 
           });                    

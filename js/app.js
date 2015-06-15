@@ -3,7 +3,7 @@ var App = Ember.Application.create();
 //App.ApplicationAdapter = DS.FixtureAdapter.extend();
 
 App.ApplicationAdapter = DS.DjangoRESTAdapter.extend({
-    host: 'http://127.0.0.1:8000'
+    host: 'http://192.168.1.30:8000'
 });
 
 Ember.Inflector.inflector.irregular('venta', 'ventas');
