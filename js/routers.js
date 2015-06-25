@@ -55,11 +55,11 @@ App.VentaRoute = Ember.Route.extend({
     if(id!='nuevo'){
       return this.store.find('venta', id);      
     }     
-    //return this.store.createRecord('venta', {});
+    return this.store.createRecord('venta', {});
   },
   setupController: function(controller, model) {    
-    controller.set('venta', model);
-    controller.get('venta').get('detalles').pushObjects(this.store.find('detalleVenta', {venta: model.get('id')}));    
+    controller.set('venta', model);    
+    controller.get('venta').get('detalles').pushObjects(this.store.find('detalleVenta', {venta: model.get('id')})); 
     controller.set('asociaciones', this.store.find('asociacion')); 
   },
 });
